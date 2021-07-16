@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "668424135235",
+    "project_id": "destinations-app-21903",
+    "storage_bucket": "destinations-app-21903.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668424135235:android:e53a502d19b9450942eaf6",
+        "android_client_info": {
+          "package_name": "com.destinations.destinations"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668424135235-0soavo20mh1usglis9rho0e6s8vhsnpq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOAuS_X2GxE-Djv0I6_WMtN87uKCwhGFs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "668424135235-0soavo20mh1usglis9rho0e6s8vhsnpq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
