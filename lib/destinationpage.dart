@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-import 'main.dart';
 
 class DestinationPage extends StatefulWidget {
   const DestinationPage({Key? key, required this.title}) : super(key: key);
@@ -20,6 +19,14 @@ class _DestinationPageState extends State<DestinationPage> {
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
+  void _addNewDest() {
+    setState(() {
+
+      //Temporary interactivity: returns to homepage
+      Navigator.pop(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +35,11 @@ class _DestinationPageState extends State<DestinationPage> {
         title: Text(widget.title),
       ),
       body: _buildSuggestions(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _addNewDest,
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),
     );
   }
 
@@ -53,17 +65,16 @@ class _DestinationPageState extends State<DestinationPage> {
         pair.asPascalCase,
         style: _biggerFont,
       ),
-      trailing: Icon(Icons.add
+      trailing: Icon(Icons.more_vert
       ),
       onTap: () {      // NEW lines from here...
         setState(() {
-          //Creats a new instance of homepage: v bad change later
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MyHomePage(title: 'Home')),
-          );
+          //TODO: navigate to page with stored description
+          //Temporary interactivity: returns to homepage
+          Navigator.pop(context);
         });
       },
+
     );
   }
 }
