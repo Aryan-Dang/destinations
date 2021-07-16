@@ -27,7 +27,7 @@ dependencies:
   cloud_firestore: ^1.0.0 # new
   firebase_auth: ^1.0.0   # new
   provider: ^5.0.0        # new
-
+  english_words: ^4.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -36,7 +36,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  english_words: ^4.0.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

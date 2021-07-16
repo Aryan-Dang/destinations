@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'destinationpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -56,6 +57,10 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DestinationPage(title: 'Saved Destinations')),
+      );
     });
   }
 
@@ -94,6 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
+              'Click the button to see your saved destinations',
+            ),
+            Text(
               'You have pushed the button this many times:',
             ),
             Text(
@@ -106,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: Icon(Icons.arrow_forward),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
