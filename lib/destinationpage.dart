@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'main.dart';
 
 class DestinationPage extends StatefulWidget {
   const DestinationPage({Key? key, required this.title}) : super(key: key);
@@ -52,7 +53,17 @@ class _DestinationPageState extends State<DestinationPage> {
         pair.asPascalCase,
         style: _biggerFont,
       ),
-
+      trailing: Icon(Icons.add
+      ),
+      onTap: () {      // NEW lines from here...
+        setState(() {
+          //Creats a new instance of homepage: v bad change later
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MyHomePage(title: 'Home')),
+          );
+        });
+      },
     );
   }
 }
