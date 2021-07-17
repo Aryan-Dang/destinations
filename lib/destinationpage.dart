@@ -17,7 +17,7 @@ class DestinationPage extends StatefulWidget {
 
 //means that this class is a subclass which inherits State and is of type <RandomWords> - instead of Generic type T
 class _DestinationPageState extends State<DestinationPage> {
-  final suggestions = <WordPair>[];
+  final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   void _addNewDest() {
@@ -54,10 +54,10 @@ class _DestinationPageState extends State<DestinationPage> {
           if (i.isOdd) return const Divider(); /*2*/
 
           final index = i ~/ 2; /*3*/
-          if (index >= suggestions.length) {
-            suggestions.addAll(generateWordPairs().take(10)); /*4*/
+          if (index >= _suggestions.length) {
+            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
           }
-          return _buildRow(suggestions[index]);
+          return _buildRow(_suggestions[index]);
         });
   }
 

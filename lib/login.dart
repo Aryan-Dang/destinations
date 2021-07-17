@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'destinationpage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,7 +8,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
+  // Initialize FlutterFire
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var nameController = TextEditingController();
@@ -16,106 +16,81 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth auth = FirebaseAuth.instance;
     return Scaffold(
       body: Center(
         child: Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Login"),
-              TextField(
-                controller: emailController,
-                obscureText: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
+              Text("Login/Signup",
+                  style: TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 50.0,
+                  )
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20.0, bottom: 5),
+                child: TextField(
+                  controller: emailController,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email',
+                  ),
                 ),
               ),
-              TextField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                ),
-              ),
-              TextField(
-                controller: nameController,
-                obscureText: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Name',
-                ),
-              ),
-              TextField(
-                controller: schoolController,
-                obscureText: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'School',
+              Container(
+                margin: const EdgeInsets.only(top: 5, bottom: 20.0),
+                child: TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                  ),
                 ),
               ),
               RaisedButton(
-                child: Text("Login"),
-                onPressed: () {
-                auth.signInWithEmailAndPassword(
-                      email: emailController.text, password: passwordController.text)
-                      .then((value) {
-                    print("Successfully sign in");
-                    //TODO: add better check here to check for null values
-                    print(value.user == null ? value.user?.email : value.user?.email);
+                color: Colors.lightBlueAccent,
+                child: Text("Log In!"),
+                onPressed: () async {
 
-                    //pushing to database and stuff i think
-                    // FirebaseFirestore.instance.child("users/" + value.user.uid).once()
-                    //     .then((ds) {
-                    //   print(ds.key);
-                    //   print(ds.value);
-                    //   GlobalInfo.userInfo = ds.value;
-                    //
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (context) => FriendListPage()),
-                    //   );
-                    //
-                    // }).catchError((e) {
-                    //   print("Failed to get the user information");
-                    // });
+                  //Test code to print contents of controllers
+                  // print(emailController.text);
+                  // print(passwordController.text);
 
-
-                  }).catchError((error) {
-                    print("Failed to sign in");
-                    print(error);
-                  });
+                  try {
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text
+                    );
+                    print('Login successful!');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DestinationPage(title: 'Saved Destinations')),
+                    );
+                  } on FirebaseAuthException catch  (e) {
+                    print('Login Failed. Error code: ${e.code}');
+                    print(e.message);
+                  }
                 },
               ),
               RaisedButton(
-                child: Text("Signup"),
-                onPressed: () {
-                  auth.createUserWithEmailAndPassword(
-                      email: emailController.text, password: passwordController.text)
-                      .then((value) {
-                    print("Successfully signed up. ");
-                    //more adding to firestore stuff
-                    // var uid = value.user.uid;
-                    // FirebaseDatabase.instance.reference().child('users/' + uid).set(
-                    //     {
-                    //       'uid' : uid,
-                    //       'email' : emailController.text.toString(),
-                    //       'name' : nameController.text.toString(),
-                    //       'school' : schoolController.text.toString(),
-                    //     }
-                    // ).then((value) {
-                    //   print("Successfully signed up the user with details.");
-                    // }).catchError((error) {
-                    //   print("Failed to put the details.");
-                    //   print(error);
-                    // });
-                  }).catchError((error){
-                    print("Failed to sign up");
-                    print(error);
-                  });
-                },
+                  child: Text("Sign Up!"),
+                  color: Colors.lightBlueAccent,
+                  onPressed: () async {
+                    try {
+                      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                          email: emailController.text,
+                          password: passwordController.text
+                      );
+                      print('Account created!');
+                    } on FirebaseAuthException catch  (e) {
+                      print('Signup Failed. Error code: ${e.code}');
+                      print(e.message);
+                    }
+                  }
               ),
             ],
           ),
