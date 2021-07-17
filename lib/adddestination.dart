@@ -26,7 +26,7 @@ class _AddDestPageState extends State<AddDestPage> {
     setState(() {
       //TODO: store info from controllers
 
-      //Return to pervious destination list page
+      //Return to previous destination list page
       Navigator.pop(context);
     });
   }

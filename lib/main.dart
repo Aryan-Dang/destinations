@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'destinationpage.dart';
-import 'login.dart';
+//import 'login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),//MyHomePage(title: 'Flutter Demo Home Page'),
+      home: /*LoginPage(),*/MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
