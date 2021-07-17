@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'aboutpage.dart';
 import 'adddestination.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -24,6 +25,15 @@ class _DestinationPageState extends State<DestinationPage> {
   CollectionReference users2 = FirebaseFirestore.instance.collection('users');
   var mail = "";
 
+  void _navToAbout() {
+    setState(() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AboutPage(title: 'About the Destinations App')),
+      );
+    });
+  }
+
   void _addNewDest() {
     setState(() {
       Navigator.push(
@@ -39,6 +49,15 @@ class _DestinationPageState extends State<DestinationPage> {
       appBar: AppBar(
         //wrapped in sub-widget Text
         title: Text(widget.title),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.info,
+                color: Colors.white,
+              ),
+              onPressed: _navToAbout,
+            )
+          ]
       ),
       body: _buildSuggestions(),
       floatingActionButton: FloatingActionButton(

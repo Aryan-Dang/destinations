@@ -20,11 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     void _navToAbout() {
       setState(() {
-        // This call to setState tells the Flutter framework that something has
-        // changed in this State, which causes it to rerun the build method below
-        // so that the display can reflect the updated values. If we changed
-        // _counter without calling setState(), then the build method would not be
-        // called again, and so nothing would appear to happen.
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AboutPage(title: 'About the Destinations App')),
@@ -46,16 +41,31 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text("Destinations"),
+        actions: <Widget>[
+            IconButton(
+            icon: Icon(
+              Icons.info,
+              color: Colors.white,
+            ),
+            onPressed: _navToAbout,
+          )
+          ]
+        ),
       body: Center(
         child: Container(
           margin: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Login/Signup",
+              Text("Welcome to the Destinations app!",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.blue,
-                    fontSize: 50.0,
+                    fontSize: 40.0,
                   )
               ),
               Container(
@@ -90,9 +100,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onPressed: () async {
 
-                  //Test code to print contents of controllers
-                  // print(emailController.text);
-                  // print(passwordController.text);
+                          //Test code to print contents of controllers
+                          // print(emailController.text);
+                          // print(passwordController.text);
 
                   try {
                     await FirebaseAuth.instance.signInWithEmailAndPassword(

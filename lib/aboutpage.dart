@@ -37,56 +37,50 @@ class _AboutPageState extends State<AboutPage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+
+
+
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+      body: Column(
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        //mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 48,
+            child:Image(
+              image: NetworkImage('https://p0.pxfuel.com/preview/440/255/773/travel-car-cars-hd-wallpaper.jpg')
+            )
+          ),
 
-            Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: Column(
-                children: [
-                  Text(
-                      'Love to travel? Destinations is a hub for all your favorite (or prospective favorite) locations and places to go. Just create/login with an account and click the plus icon on the Saved Destinations to add a new destination.',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                      )
-                  ),
-
-                ],
+          Expanded(
+            flex: 60,
+            child: Container(
+              margin: const EdgeInsets.all(30),
+              child: Text(
+                          'Love to travel? Destinations is a hub for all your favorite (or prospective favorite) locations and places to go! Just create with an account, log in, and click the plus icon on the Saved Destinations to add a new destination.',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                          )
+          ),
+            ),
+          ),
+          Expanded(
+              flex: 10,
+              child: Text('Vivien Jamba, Aryan Dang             July 2021',
+                  style: TextStyle(
+                    fontSize: 15.0,
+                  )
               ),
             ),
-
-          ],
-        ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _submitInfo,
-        tooltip: 'Done',
-        child: Icon(Icons.check),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+     );
   }
 }
