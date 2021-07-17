@@ -106,7 +106,7 @@ class _AddDestPageState extends State<AddDestPage> {
                     margin: const EdgeInsets.only(top: 5, bottom: 20.0),
                     child: TextField(
                       controller: destDetailsController,
-                      obscureText: true,
+                      obscureText: false,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Details',
