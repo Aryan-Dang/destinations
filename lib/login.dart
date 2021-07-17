@@ -37,10 +37,10 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Love to travel? Destinations is a hub for all your favorite (or prospective favorite) locations and places to go. Just create/login with an account and click the plus icon on the Saved Destinations to add a new destination.",
+              Text("Login/Signup",
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
+                    color: Colors.blue,
+                    fontSize: 50.0,
                   )
               ),
               Container(

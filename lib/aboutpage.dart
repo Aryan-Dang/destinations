@@ -20,8 +20,6 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  var destTitleController = TextEditingController();
-  var destDetailsController = TextEditingController();
   void _submitInfo() {
     setState(() {
       //TODO: store info from controllers
@@ -71,34 +69,12 @@ class _AboutPageState extends State<AboutPage> {
               child: Column(
                 children: [
                   Text(
-                      'Enter your new destination info below:',
+                      'Love to travel? Destinations is a hub for all your favorite (or prospective favorite) locations and places to go. Just create/login with an account and click the plus icon on the Saved Destinations to add a new destination.',
                       style: TextStyle(
                         fontSize: 20.0,
                       )
                   ),
 
-                  Container(
-                    margin: const EdgeInsets.only(top: 20.0, bottom: 5),
-                    child: TextField(
-                      controller: destTitleController,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Title',
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 5, bottom: 20.0),
-                    child: TextField(
-                      controller: destDetailsController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Details',
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
