@@ -26,11 +26,13 @@ class _DestinationPageState extends State<DestinationPage> {
   CollectionReference users2 = FirebaseFirestore.instance.collection('users');
 
   String getMail() => widget.email;
+
   void _navToAbout() {
     setState(() {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AboutPage(title: 'About the Destinations App')),
+        MaterialPageRoute(builder: (context) =>
+            AboutPage(title: 'About the Destinations App')),
       );
     });
   }
@@ -39,7 +41,8 @@ class _DestinationPageState extends State<DestinationPage> {
     setState(() {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AddDestPage(title: 'Add New Destination', email: widget.email)),
+        MaterialPageRoute(builder: (context) =>
+            AddDestPage(title: 'Add New Destination', email: widget.email)),
       );
     });
   }
@@ -52,7 +55,6 @@ class _DestinationPageState extends State<DestinationPage> {
       future: users.doc(widget.email).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
         if (snapshot.hasError) {
           return Text("Something went wrong");
         }
@@ -62,125 +64,66 @@ class _DestinationPageState extends State<DestinationPage> {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+          Map<String, dynamic> data = snapshot.data!.data() as Map<String,dynamic>;
           print(data);
           var destinationsList = data["Destinations"];
           //return Text("Full Name: ${data['full_name']} ${data['last_name']}");
-          return  Scaffold(
-                appBar: AppBar(
-                  //wrapped in sub-widget Text
-                  title: Text(widget.title),
-                    actions: <Widget>[
-                      IconButton(
-                        icon: Icon(
-                          Icons.info,
-                          color: Colors.white,
+          return Scaffold(
+            appBar: AppBar(
+              //wrapped in sub-widget Text
+                title: Text(widget.title),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.info,
+                      color: Colors.white,
+                    ),
+                    onPressed: _navToAbout,
+                  )
+                ]
+            ),
+            body: () {
+              return ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemBuilder: /*1*/ (context, i) {
+                    if (i.isOdd) return const Divider();
+                    /*2*/
+
+                    final index = i ~/ 2; /*3*/
+                    if (index >= destinationsList.length) {
+                      return Text('');
+                    }
+                    return (String pair) {
+                      return ListTile(
+                        title: Text(
+                          pair,
+                          style: _biggerFont,
                         ),
-                        onPressed: _navToAbout,
-                      )
-                    ]
-                ),
-                body: () {
-                    return ListView.builder(
-                        padding: const EdgeInsets.all(16.0),
-                        itemBuilder: /*1*/ (context, i) {
-                          if (i.isOdd) return const Divider(); /*2*/
+                        trailing: Icon(Icons.more_vert
+                        ),
+                        onTap: () { // NEW lines from here...
+                          setState(() {
+                            //TODO: navigate to page with stored description
+                            //Temporary interactivity: returns to homepage
+                            Navigator.pop(context);
+                          });
+                        },
 
-                          final index = i ~/ 2; /*3*/
-                          if (index >= destinationsList.length) {
-                            return const Divider();
-                          }
-                          return (String pair) {
-                              return ListTile(
-                                title: Text(
-                                  pair,
-                                  style: _biggerFont,
-                                ),
-                                trailing: Icon(Icons.more_vert
-                                ),
-                                onTap: () {      // NEW lines from here...
-                                  setState(() {
-                                    //TODO: navigate to page with stored description
-                                    //Temporary interactivity: returns to homepage
-                                    Navigator.pop(context);
-                                  });
-                                },
+                      );
+                    }(destinationsList[index]);
+                  });
+            }(),
+            floatingActionButton: FloatingActionButton(
+              onPressed: _addNewDest,
+              tooltip: 'Add New Destination',
+              child: Icon(Icons.add),
 
-                              );
-                            }(destinationsList[index]);
-                        });
-                  }(),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: _addNewDest,
-                  tooltip: 'Add New Destination',
-                  child: Icon(Icons.add),
-
-                ),
-              );
-              }
+            ),
+          );
+        }
 
         return Text("loading");
       },
     );
   }
-
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     //wrapped in sub-widget Text
-    //     title: Text(widget.title),
-    //       actions: <Widget>[
-    //         IconButton(
-    //           icon: Icon(
-    //             Icons.info,
-    //             color: Colors.white,
-    //           ),
-    //           onPressed: _navToAbout,
-    //         )
-    //       ]
-    //   ),
-    //   body: _buildSuggestions(),
-    //   floatingActionButton: FloatingActionButton(
-    //     onPressed: _addNewDest,
-    //     tooltip: 'Add New Destination',
-    //     child: Icon(Icons.add),
-    //
-    //   ),
-    // );
-  }
-
-  // //builds ListView widget
-  // Widget _buildSuggestions() {
-  //   return ListView.builder(
-  //       padding: const EdgeInsets.all(16.0),
-  //       itemBuilder: /*1*/ (context, i) {
-  //         if (i.isOdd) return const Divider(); /*2*/
-  //
-  //         final index = i ~/ 2; /*3*/
-  //         if (index >= _suggestions.length) {
-  //           _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-  //         }
-  //         return _buildRow(_suggestions[index]);
-  //       });
-  // }
-  //
-  // //used to build each row (list tile)
-  // Widget _buildRow(WordPair pair) {
-  //   return ListTile(
-  //     title: Text(
-  //       pair.asPascalCase,
-  //       style: _biggerFont,
-  //     ),
-  //     trailing: Icon(Icons.more_vert
-  //     ),
-  //     onTap: () {      // NEW lines from here...
-  //       setState(() {
-  //         //TODO: navigate to page with stored description
-  //         //Temporary interactivity: returns to homepage
-  //         Navigator.pop(context);
-  //       });
-  //     },
-  //
-  //   );
-  // }
-//}
-
+}
