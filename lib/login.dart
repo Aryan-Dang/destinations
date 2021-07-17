@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'aboutpage.dart';
 import 'destinationpage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -25,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
         // called again, and so nothing would appear to happen.
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DestinationPage(title: 'Saved Destinations')),
+          MaterialPageRoute(builder: (context) => AboutPage(title: 'About the Destinations App')),
         );
       });
     }
@@ -36,10 +37,10 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Login/Signup",
+              Text("Love to travel? Destinations is a hub for all your favorite (or prospective favorite) locations and places to go. Just create/login with an account and click the plus icon on the Saved Destinations to add a new destination.",
                   style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 50.0,
+                    color: Colors.black,
+                    fontSize: 20.0,
                   )
               ),
               Container(
