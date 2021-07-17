@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddDestPage extends StatefulWidget {
@@ -21,11 +20,25 @@ class AddDestPage extends StatefulWidget {
 }
 
 class _AddDestPageState extends State<AddDestPage> {
+
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  var mail = "aryandang@gmail.com"; //TODO: get currently signed in user's mail id as that's the document key
+
+  Future<void> updateUser(String newDestination) {
+    return users
+        .doc(mail)
+        .update({'Destinations': FieldValue.arrayUnion([newDestination])})
+        .then((value) => print("User Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+  }
+
   var destTitleController = TextEditingController();
   var destDetailsController = TextEditingController();
   void _submitInfo() {
     setState(() {
-      //TODO: store info from controllers
+      //TODO: decide if need details from user
+      updateUser(destTitleController.text);
 
       //Return to previous destination list page
       Navigator.pop(context);
