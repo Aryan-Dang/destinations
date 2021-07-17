@@ -31,16 +31,31 @@ class _LoginPageState extends State<LoginPage> {
       });
     }
     return Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text("Destinations"),
+        actions: <Widget>[
+            IconButton(
+            icon: Icon(
+              Icons.info,
+              color: Colors.white,
+            ),
+            onPressed: _navToAbout,
+          )
+          ]
+        ),
       body: Center(
         child: Container(
           margin: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Login/Signup",
+              Text("Welcome to the Destinations app!",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.blue,
-                    fontSize: 50.0,
+                    fontSize: 40.0,
                   )
               ),
               Container(
@@ -120,11 +135,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navToAbout,
-        tooltip: 'About Destinations',
-        child: Icon(Icons.info),
-      ),
+
     );
   }
 }
