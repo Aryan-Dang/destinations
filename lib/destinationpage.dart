@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'adddestination.dart';
 
 class DestinationPage extends StatefulWidget {
   const DestinationPage({Key? key, required this.title}) : super(key: key);
@@ -21,9 +22,10 @@ class _DestinationPageState extends State<DestinationPage> {
 
   void _addNewDest() {
     setState(() {
-
-      //Temporary interactivity: returns to homepage
-      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AddDestPage(title: 'Add New Destination')),
+      );
     });
   }
 
@@ -37,8 +39,9 @@ class _DestinationPageState extends State<DestinationPage> {
       body: _buildSuggestions(),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNewDest,
-        tooltip: 'Increment',
+        tooltip: 'Add New Destination',
         child: Icon(Icons.add),
+
       ),
     );
   }
