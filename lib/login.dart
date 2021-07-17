@@ -16,6 +16,19 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    void _navToAbout() {
+      setState(() {
+        // This call to setState tells the Flutter framework that something has
+        // changed in this State, which causes it to rerun the build method below
+        // so that the display can reflect the updated values. If we changed
+        // _counter without calling setState(), then the build method would not be
+        // called again, and so nothing would appear to happen.
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DestinationPage(title: 'Saved Destinations')),
+        );
+      });
+    }
     return Scaffold(
       body: Center(
         child: Container(
@@ -25,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Text("Login/Signup",
                   style: TextStyle(
-                    color: Colors.lightBlueAccent,
+                    color: Colors.blue,
                     fontSize: 50.0,
                   )
               ),
@@ -52,8 +65,13 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               RaisedButton(
-                color: Colors.lightBlueAccent,
-                child: Text("Log In!"),
+                color: Colors.blue,
+                child: Text("Log In",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  )
+                ),
                 onPressed: () async {
 
                   //Test code to print contents of controllers
@@ -77,8 +95,13 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               RaisedButton(
-                  child: Text("Sign Up!"),
-                  color: Colors.lightBlueAccent,
+                  child: Text("Sign Up",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                    )
+                  ),
+                  color: Colors.blue,
                   onPressed: () async {
                     try {
                       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -95,6 +118,11 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navToAbout,
+        tooltip: 'About Destinations',
+        child: Icon(Icons.info),
       ),
     );
   }
