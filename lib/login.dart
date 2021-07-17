@@ -31,6 +31,20 @@ class _LoginPageState extends State<LoginPage> {
         );
       });
     }
+
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    Future<void> _addUser(String mail) {
+      // Call the user's CollectionReference to add a new user
+      return users
+      .doc(mail)
+      .set({
+        'Destinations':[]
+      })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
+
     return Scaffold(
       body: Center(
         child: Container(
@@ -111,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                           password: passwordController.text
                       );
                       print('Account created!');
+                      await _addUser(emailController.text);
                     } on FirebaseAuthException catch  (e) {
                       print('Signup Failed. Error code: ${e.code}');
                       print(e.message);
