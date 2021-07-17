@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'adddestination.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DestinationPage extends StatefulWidget {
   const DestinationPage({Key? key, required this.title}) : super(key: key);
@@ -19,6 +20,9 @@ class DestinationPage extends StatefulWidget {
 class _DestinationPageState extends State<DestinationPage> {
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
+
+  CollectionReference users2 = FirebaseFirestore.instance.collection('users');
+  var mail = "";
 
   void _addNewDest() {
     setState(() {
