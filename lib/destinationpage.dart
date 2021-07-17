@@ -46,40 +46,84 @@ class _DestinationPageState extends State<DestinationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('users').snapshots();
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: _usersStream,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(widget.email).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
         if (snapshot.hasError) {
-          return Text('Something went wrong');
+          return Text("Something went wrong");
         }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return Text("Document does not exist");
         }
 
-        return new ListView(
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            try {
-              dynamic nested = document.get(FieldPath(['Destinations']));
-              print(nested);
-            } on StateError catch(e) {
-              print('No nested field exists!');
-            }
-            return ListTile(
-              title: new Text("I LOVE FLutter"),
-            );
-            // Map<String, List<String>> data = document.data() as Map<String, List<String>>;
-            // print(data);
-            // return new ListTile(
-            //   title: new Text(data!['Destinations']),
-            //   subtitle: new Text(data['company']),
-            //);
-          }).toList(),
-        );
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+          print(data);
+          var destinationsList = data["Destinations"];
+          //return Text("Full Name: ${data['full_name']} ${data['last_name']}");
+          return  Scaffold(
+                appBar: AppBar(
+                  //wrapped in sub-widget Text
+                  title: Text(widget.title),
+                    actions: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.info,
+                          color: Colors.white,
+                        ),
+                        onPressed: _navToAbout,
+                      )
+                    ]
+                ),
+                body: () {
+                    return ListView.builder(
+                        padding: const EdgeInsets.all(16.0),
+                        itemBuilder: /*1*/ (context, i) {
+                          if (i.isOdd) return const Divider(); /*2*/
+
+                          final index = i ~/ 2; /*3*/
+                          if (index >= destinationsList.length) {
+                            return const Divider();
+                          }
+                          return (String pair) {
+                              return ListTile(
+                                title: Text(
+                                  pair,
+                                  style: _biggerFont,
+                                ),
+                                trailing: Icon(Icons.more_vert
+                                ),
+                                onTap: () {      // NEW lines from here...
+                                  setState(() {
+                                    //TODO: navigate to page with stored description
+                                    //Temporary interactivity: returns to homepage
+                                    Navigator.pop(context);
+                                  });
+                                },
+
+                              );
+                            }(destinationsList[index]);
+                        });
+                  }(),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: _addNewDest,
+                  tooltip: 'Add New Destination',
+                  child: Icon(Icons.add),
+
+                ),
+              );
+              }
+
+        return Text("loading");
       },
     );
+  }
+
     // return Scaffold(
     //   appBar: AppBar(
     //     //wrapped in sub-widget Text
@@ -99,44 +143,44 @@ class _DestinationPageState extends State<DestinationPage> {
     //     onPressed: _addNewDest,
     //     tooltip: 'Add New Destination',
     //     child: Icon(Icons.add),
-
-      //),
-    //);
+    //
+    //   ),
+    // );
   }
 
-  //builds ListView widget
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return const Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-          }
-          return _buildRow(_suggestions[index]);
-        });
-  }
-
-  //used to build each row (list tile)
-  Widget _buildRow(WordPair pair) {
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-      trailing: Icon(Icons.more_vert
-      ),
-      onTap: () {      // NEW lines from here...
-        setState(() {
-          //TODO: navigate to page with stored description
-          //Temporary interactivity: returns to homepage
-          Navigator.pop(context);
-        });
-      },
-
-    );
-  }
-}
+  // //builds ListView widget
+  // Widget _buildSuggestions() {
+  //   return ListView.builder(
+  //       padding: const EdgeInsets.all(16.0),
+  //       itemBuilder: /*1*/ (context, i) {
+  //         if (i.isOdd) return const Divider(); /*2*/
+  //
+  //         final index = i ~/ 2; /*3*/
+  //         if (index >= _suggestions.length) {
+  //           _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+  //         }
+  //         return _buildRow(_suggestions[index]);
+  //       });
+  // }
+  //
+  // //used to build each row (list tile)
+  // Widget _buildRow(WordPair pair) {
+  //   return ListTile(
+  //     title: Text(
+  //       pair.asPascalCase,
+  //       style: _biggerFont,
+  //     ),
+  //     trailing: Icon(Icons.more_vert
+  //     ),
+  //     onTap: () {      // NEW lines from here...
+  //       setState(() {
+  //         //TODO: navigate to page with stored description
+  //         //Temporary interactivity: returns to homepage
+  //         Navigator.pop(context);
+  //       });
+  //     },
+  //
+  //   );
+  // }
+//}
 
