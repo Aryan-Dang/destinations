@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'aboutpage.dart';
 
 class AddDestPage extends StatefulWidget {
-  AddDestPage({Key? key, required this.title}) : super(key: key);
+  AddDestPage({Key? key, required this.title, required this.email}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -16,6 +16,7 @@ class AddDestPage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  final String email;
 
   @override
   _AddDestPageState createState() => _AddDestPageState();
@@ -25,11 +26,9 @@ class _AddDestPageState extends State<AddDestPage> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  var mail = "aryandang@gmail.com"; //TODO: get currently signed in user's mail id as that's the document key
-
   Future<void> updateUser(String newDestination) {
     return users
-        .doc(mail)
+        .doc(widget.email)
         .update({'Destinations': FieldValue.arrayUnion([newDestination])})
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));

@@ -90,8 +90,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              RaisedButton(
-                color: Colors.blue,
+              ElevatedButton(
+                //color: Colors.blue,
                 child: Text("Log In",
                   style: TextStyle(
                     color: Colors.white,
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                     print('Login successful!');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DestinationPage(title: 'Saved Destinations')),
+                      MaterialPageRoute(builder: (context) => DestinationPage(title: 'Saved Destinations', email: emailController.text)),
                     );
                   } on FirebaseAuthException catch  (e) {
                     print('Login Failed. Error code: ${e.code}');
@@ -120,14 +120,14 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
               ),
-              RaisedButton(
+              ElevatedButton(
                   child: Text("Sign Up",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
                     )
                   ),
-                  color: Colors.blue,
+                  //color: Colors.blue,
                   onPressed: () async {
                     try {
                       await FirebaseAuth.instance.createUserWithEmailAndPassword(

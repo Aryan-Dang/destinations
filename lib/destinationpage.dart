@@ -9,8 +9,9 @@ import 'adddestination.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DestinationPage extends StatefulWidget {
-  const DestinationPage({Key? key, required this.title}) : super(key: key);
+  const DestinationPage({Key? key, required this.title, required this.email}) : super(key: key);
   final String title;
+  final String email;
 
   @override
   _DestinationPageState createState() => _DestinationPageState();
@@ -38,7 +39,7 @@ class _DestinationPageState extends State<DestinationPage> {
     setState(() {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AddDestPage(title: 'Add New Destination')),
+        MaterialPageRoute(builder: (context) => AddDestPage(title: 'Add New Destination', email: widget.email)),
       );
     });
   }
