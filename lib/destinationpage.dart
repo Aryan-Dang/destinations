@@ -24,8 +24,8 @@ class _DestinationPageState extends State<DestinationPage> {
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   CollectionReference users2 = FirebaseFirestore.instance.collection('users');
-  var mail = "";
 
+  String getMail() => widget.email;
   void _navToAbout() {
     setState(() {
       Navigator.push(
@@ -46,28 +46,62 @@ class _DestinationPageState extends State<DestinationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        //wrapped in sub-widget Text
-        title: Text(widget.title),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.info,
-                color: Colors.white,
-              ),
-              onPressed: _navToAbout,
-            )
-          ]
-      ),
-      body: _buildSuggestions(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addNewDest,
-        tooltip: 'Add New Destination',
-        child: Icon(Icons.add),
+    final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('users').snapshots();
 
-      ),
+    return StreamBuilder<QuerySnapshot>(
+      stream: _usersStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        return new ListView(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            try {
+              dynamic nested = document.get(FieldPath(['Destinations']));
+              print(nested);
+            } on StateError catch(e) {
+              print('No nested field exists!');
+            }
+            return ListTile(
+              title: new Text("I LOVE FLutter"),
+            );
+            // Map<String, List<String>> data = document.data() as Map<String, List<String>>;
+            // print(data);
+            // return new ListTile(
+            //   title: new Text(data!['Destinations']),
+            //   subtitle: new Text(data['company']),
+            //);
+          }).toList(),
+        );
+      },
     );
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     //wrapped in sub-widget Text
+    //     title: Text(widget.title),
+    //       actions: <Widget>[
+    //         IconButton(
+    //           icon: Icon(
+    //             Icons.info,
+    //             color: Colors.white,
+    //           ),
+    //           onPressed: _navToAbout,
+    //         )
+    //       ]
+    //   ),
+    //   body: _buildSuggestions(),
+    //   floatingActionButton: FloatingActionButton(
+    //     onPressed: _addNewDest,
+    //     tooltip: 'Add New Destination',
+    //     child: Icon(Icons.add),
+
+      //),
+    //);
   }
 
   //builds ListView widget
