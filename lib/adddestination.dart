@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'aboutpage.dart';
+import 'destinationpage.dart';
 
 class AddDestPage extends StatefulWidget {
   AddDestPage({Key? key, required this.title, required this.email}) : super(key: key);
@@ -42,7 +43,11 @@ class _AddDestPageState extends State<AddDestPage> {
       updateUser(destTitleController.text, destDetailsController.text);
 
       //Return to previous destination list page
-      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>
+            DestinationPage(title: 'Saved Destinations', email: widget.email)),
+      );
     });
   }
 

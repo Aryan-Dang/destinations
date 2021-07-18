@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
 
 class AboutPage extends StatefulWidget {
   AboutPage({Key? key, required this.title}) : super(key: key);
@@ -20,14 +19,6 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  void _submitInfo() {
-    setState(() {
-      //TODO: store info from controllers
-
-      //Return to previous destination list page
-      Navigator.pop(context);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +44,14 @@ class _AboutPageState extends State<AboutPage> {
         //mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-            flex: 48,
+            flex: 38,
             child:Image(
-              image: NetworkImage('https://p0.pxfuel.com/preview/440/255/773/travel-car-cars-hd-wallpaper.jpg')
+              image: NetworkImage('https://www.maxpixel.net/static/photo/1x/Plane-Soft-Travel-White-Airplane-Flight-Blue-Sky-4125770.jpg')
             )
           ),
 
           Expanded(
-            flex: 60,
+            flex: 61,
             child: Container(
               margin: const EdgeInsets.all(30),
               child: Text(

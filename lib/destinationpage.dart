@@ -3,10 +3,11 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
 import 'aboutpage.dart';
 import 'adddestination.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'destDetails.dart';
 
 class DestinationPage extends StatefulWidget {
   const DestinationPage({Key? key, required this.title, required this.email}) : super(key: key);
@@ -20,7 +21,6 @@ class DestinationPage extends StatefulWidget {
 
 //means that this class is a subclass which inherits State and is of type <RandomWords> - instead of Generic type T
 class _DestinationPageState extends State<DestinationPage> {
-  final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   CollectionReference users2 = FirebaseFirestore.instance.collection('users');
@@ -65,9 +65,7 @@ class _DestinationPageState extends State<DestinationPage> {
 
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data = snapshot.data!.data() as Map<String,dynamic>;
-          print(data);
           var destinationsList = data["Destinations"]; //Map<String : String>
-          print(destinationsList);
           //return Text("Full Name: ${data['full_name']} ${data['last_name']}");
           return Scaffold(
             appBar: AppBar(
@@ -105,8 +103,13 @@ class _DestinationPageState extends State<DestinationPage> {
                         onTap: () { // NEW lines from here...
                           setState(() {
                             //TODO: navigate to page with stored description
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>
+                                  DestDetails(title: 'Destination Details', email: widget.email, name: pair['name'], description: pair['description'])),
+                            );
                             //Temporary interactivity: returns to homepage
-                            Navigator.pop(context);
+                            //Navigator.pop(context);
                           });
                         },
 
