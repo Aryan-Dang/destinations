@@ -26,10 +26,10 @@ class _AddDestPageState extends State<AddDestPage> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  Future<void> updateUser(String newDestination) {
+  Future<void> updateUser(String newDestination, String newDesc) {
     return users
         .doc(widget.email)
-        .update({'Destinations': FieldValue.arrayUnion([newDestination])})
+        .update({'Destinations': FieldValue.arrayUnion([{'name': newDestination, 'description': newDesc}])})
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
   }
@@ -39,7 +39,7 @@ class _AddDestPageState extends State<AddDestPage> {
   void _submitInfo() {
     setState(() {
       //TODO: decide if need details from user
-      updateUser(destTitleController.text);
+      updateUser(destTitleController.text, destDetailsController.text);
 
       //Return to previous destination list page
       Navigator.pop(context);

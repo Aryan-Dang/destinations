@@ -66,7 +66,8 @@ class _DestinationPageState extends State<DestinationPage> {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data = snapshot.data!.data() as Map<String,dynamic>;
           print(data);
-          var destinationsList = data["Destinations"];
+          var destinationsList = data["Destinations"]; //Map<String : String>
+          print(destinationsList);
           //return Text("Full Name: ${data['full_name']} ${data['last_name']}");
           return Scaffold(
             appBar: AppBar(
@@ -93,10 +94,10 @@ class _DestinationPageState extends State<DestinationPage> {
                     if (index >= destinationsList.length) {
                       return Text('');
                     }
-                    return (String pair) {
+                    return (dynamic pair) {
                       return ListTile(
                         title: Text(
-                          pair,
+                          pair["name"],
                           style: _biggerFont,
                         ),
                         trailing: Icon(Icons.more_vert
