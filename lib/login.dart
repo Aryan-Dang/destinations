@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
           margin: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text("Welcome to the Destinations app!",
                   textAlign: TextAlign.center,
@@ -90,66 +91,77 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                //color: Colors.blue,
-                child: Text("Log In",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                  )
-                ),
-                onPressed: () async {
+              Row(
+                children: [
+                  Expanded(
+                    flex: 20,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 10),
+                      child: ElevatedButton(
+                        //color: Colors.blue,
+                        child: Text("Log In",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          )
+                        ),
+                        onPressed: () async {
 
-                          //Test code to print contents of controllers
-                          // print(emailController.text);
-                          // print(passwordController.text);
+                                  //Test code to print contents of controllers
+                                  // print(emailController.text);
+                                  // print(passwordController.text);
 
-                  try {
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text
-                    );
-                    print('Login successful!');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DestinationPage(title: 'Saved Destinations', email: emailController.text)),
-                    );
-                  } on FirebaseAuthException catch  (e) {
-                    print('Login Failed. Error code: ${e.code}');
-                    print(e.message);
-                  }
-                },
-              ),
-              ElevatedButton(
-                  child: Text("Sign Up",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                    )
+                          try {
+                            await FirebaseAuth.instance.signInWithEmailAndPassword(
+                                email: emailController.text,
+                                password: passwordController.text
+                            );
+                            print('Login successful!');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => DestinationPage(title: 'Saved Destinations', email: emailController.text)),
+                            );
+                          } on FirebaseAuthException catch  (e) {
+                            print('Login Failed. Error code: ${e.code}');
+                            print(e.message);
+                          }
+                        },
+                      ),
+                    ),
                   ),
-                  //color: Colors.blue,
-                  onPressed: () async {
-                    try {
-                      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                          email: emailController.text,
-                          password: passwordController.text
-                      );
-                      print('Account created!');
-                      await _addUser(emailController.text);
-                    } on FirebaseAuthException catch  (e) {
-                      print('Signup Failed. Error code: ${e.code}');
-                      print(e.message);
-                    }
-                  }
+                  Expanded(
+                    flex: 20,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 20),
+                      child: ElevatedButton(
+                          child: Text("Sign Up",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                            )
+                          ),
+                          //color: Colors.blue,
+                          onPressed: () async {
+                            try {
+                              await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text
+                              );
+                              print('Account created!');
+                              await _addUser(emailController.text);
+                            } on FirebaseAuthException catch  (e) {
+                              print('Signup Failed. Error code: ${e.code}');
+                              print(e.message);
+                            }
+                          }
+                      ),
+                    ),
+                  )
+                ],
               ),
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navToAbout,
-        tooltip: 'About Destinations',
-        child: Icon(Icons.info),
       ),
     );
   }
